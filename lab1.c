@@ -21,28 +21,28 @@ int rounding(double x)
 int main() 
 {
   int N, i, part;
-  double *mass;
-  double  min, max, sum = 0;
+  double *mass, min, max;
+  long double sum = 0;
 
   setlocale(LC_ALL, "Rus");
 
-  printf("Введите min = ");
+  printf("Р’РІРµРґРёС‚Рµ min = ");
   scanf("%lf", &min);
-  printf("Введите max = ");
+  printf("Р’РІРµРґРёС‚Рµ max = ");
   scanf("%lf", &max);
 
   if (min >= max)
   {
-    printf("\vНекорректные значения min и max. Перезапустите программу и введите min < max.\v");
+    printf("\vРќРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ min Рё max. РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ РїСЂРѕРіСЂР°РјРјСѓ Рё РІРІРµРґРёС‚Рµ min < max.\v");
     return 0;
   }
 
-  printf("Введите N = ");
+  printf("Р’РІРµРґРёС‚Рµ N = ");
   scanf("%d", &N);
 
   if (N <= 0)
   {
-    printf("\vНекорректное значение N. Перезапустите программу и введите N > 0.\v");
+    printf("\vРќРµРєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ N. РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ РїСЂРѕРіСЂР°РјРјСѓ Рё РІРІРµРґРёС‚Рµ N > 0.\v");
     return 0;
   }
 
@@ -55,9 +55,9 @@ int main()
   for (i = 0; i < N; i++)
   {
     mass[i] = ((double)rand() / RAND_MAX) * (max - min) + min;
-    part = (rounding((mass[i] - trunc(mass[i])) * pow(10,6)));
+    part = abs((rounding((mass[i] - trunc(mass[i])) * pow(10,6))));
 
-    if (part < N && part > 0)
+    if (part < N && part >= 0)
       sum -= mass[i];
     else
       sum += mass[i];
@@ -68,7 +68,7 @@ int main()
 
   }
   
-  printf("Сумма = %lf\n", sum);
+  printf("РЎСѓРјРјР° = %lf\n", sum);
   free(mass);
   return 0;
 }
