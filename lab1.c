@@ -6,6 +6,7 @@
 #include <math.h>
 #include <time.h>
 
+/*
 int rounding(double x)
 {
   int v = 0;
@@ -17,19 +18,19 @@ int rounding(double x)
   }
   return v;
 }
-
+*/
 int main() 
 {
-  int N, i, part;
-  double *mass, min, max;
-  long double sum = 0;
+  int N, i, part, temp, k = 0;
+  float *mass, min, max;
+  float sum = 0;
 
   setlocale(LC_ALL, "Rus");
 
   printf("Введите min = ");
-  scanf("%lf", &min);
+  scanf("%f", &min);
   printf("Введите max = ");
-  scanf("%lf", &max);
+  scanf("%f", &max);
 
   if (min >= max)
   {
@@ -46,16 +47,25 @@ int main()
     return 0;
   }
 
-  mass = (double*)malloc(N * sizeof(double));
+  mass = (float*)malloc(N * sizeof(float));
   if (mass == 0)
     return 0;
+   
+  temp = N;
+  while (temp > 0)
+  {
+    temp = temp / 10;
+    k++;
+  }
 
   srand(time(NULL));
 
   for (i = 0; i < N; i++)
   {
-    mass[i] = ((double)rand() / RAND_MAX) * (max - min) + min;
-    part = abs((rounding((mass[i] - trunc(mass[i])) * pow(10,6))));
+    mass[i] = ((float)rand() / RAND_MAX) * (max - min) + min;
+   // part = abs((((mass[i] - trunc(mass[i])) * pow(10, 6))));
+
+    part = abs((mass[i] - trunc(mass[i])) * pow(10,k));
 
     if (part < N && part >= 0)
       sum -= mass[i];
@@ -63,12 +73,12 @@ int main()
       sum += mass[i];
    
 
-    //printf("mass[%d] = %lf\t", i, mass[i]);
+    //printf("mass[%d] = %f\t", i, mass[i]);
     //printf("%d\n", part);
 
   }
   
-  printf("Сумма = %lf\n", sum);
+  printf("Сумма = %f\n", sum);
   free(mass);
   return 0;
 }
