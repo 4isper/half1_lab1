@@ -6,22 +6,9 @@
 #include <math.h>
 #include <time.h>
 
-/*
-int rounding(double x)
-{
-  int v = 0;
-
-  v = (int)round(x * 10 / 10.0);
-  while ((v % 10) == 0)
-  {
-    v = v / 10;
-  }
-  return v;
-}
-*/
 int main() 
 {
-  int N, i, part, temp, k = 0;
+  int *part, N, i, j, temp, k = 0;
   float *mass, min, max;
   float sum = 0;
 
@@ -48,7 +35,8 @@ int main()
   }
 
   mass = (float*)malloc(N * sizeof(float));
-  if (mass == 0)
+  part = (int*)malloc(N * sizeof(int));
+  if ((mass == 0) || (part == 0))
     return 0;
    
   temp = N;
@@ -63,20 +51,28 @@ int main()
   for (i = 0; i < N; i++)
   {
     mass[i] = ((float)rand() / RAND_MAX) * (max - min) + min;
-   // part = abs((((mass[i] - trunc(mass[i])) * pow(10, 6))));
-
-    part = abs((mass[i] - trunc(mass[i])) * pow(10,k));
-
-    if (part < N && part >= 0)
-      sum -= mass[i];
-    else
-      sum += mass[i];
-   
+    part[i] = (int)(abs((mass[i] - trunc(mass[i])) * pow(10,k)));
 
     //printf("mass[%d] = %f\t", i, mass[i]);
-    //printf("%d\n", part);
+    //printf("%d\n", part[i]);
 
   }
+
+  for (i = 0; i < N; i++)
+  {
+    for (j = 0; j < N; j++)
+    {
+      if (part[i] == j)
+      {
+        sum -= mass[j];
+        mass[j] = 0;
+      }
+    }  
+  }
+
+  for (i = 0; i < N; i++)
+    sum += mass[i];
+ 
   
   printf("Сумма = %f\n", sum);
   free(mass);
