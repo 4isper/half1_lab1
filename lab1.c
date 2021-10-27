@@ -75,6 +75,7 @@ int main()
  
   
   printf("Сумма = %f\n", sum);
+  free(part);
   free(mass);
   return 0;
 }
