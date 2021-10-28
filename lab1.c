@@ -53,7 +53,7 @@ int main()
     mass[i] = ((float)rand() / RAND_MAX) * (max - min) + min;
     part[i] = (int)(abs((mass[i] - trunc(mass[i])) * pow(10,k)));
     
-    while ((part[i] % 10) == 0)
+    while (((part[i] % 10) == 0) && (part[i] > 0))
       part[i] = part[i] / 10;
 
     //printf("mass[%d] = %f\t", i, mass[i]);
